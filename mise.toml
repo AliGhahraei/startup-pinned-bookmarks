@@ -1,0 +1,6 @@
+[tools]
+node = "latest"
+"npm:web-ext" = "latest"
+
+[tasks]
+lint = "web-ext lint"

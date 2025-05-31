@@ -1,0 +1,7 @@
+[tools.node]
+version = "24.1.0"
+backend = "core:node"
+
+[tools."npm:web-ext"]
+version = "8.7.1"
+backend = "npm:web-ext"
