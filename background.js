@@ -4,14 +4,8 @@ async function getStartupBookmarks() {
   try {
     const allBookmarks = await browser.bookmarks.getTree();
 
-    if (!allBookmarks || allBookmarks.length === 0) {
-      console.warn("No bookmarks found.");
-      return [];
-    }
-
     function findFolder(node) {
       if (node.title === BOOKMARK_FOLDER_NAME && node.children) {
-        console.log("Found folder:", node.title);
         return node.children;
       }
       for (const child of node.children || []) {
@@ -23,33 +17,43 @@ async function getStartupBookmarks() {
 
     return findFolder(allBookmarks[0]) || [];
   } catch (error) {
-    console.error("Error getting bookmarks:", error);
+    console.error("Error accessing bookmarks:", error);
     return [];
   }
 }
 
-
-async function openPinnedStartupTabs() {
+async function openStartupPinnedTabs() {
   const bookmarks = await getStartupBookmarks();
-  if (bookmarks.length === 0) return;
+  if (bookmarks.length === 0) {
+    console.warn("No bookmarks found in Startup Tabs folder.");
+    return;
+  }
 
   const [currentWindow] = await browser.windows.getAll({ populate: true });
 
-  // Close all tabs first
-  const tabIds = currentWindow.tabs.map(tab => tab.id);
-  await browser.tabs.remove(tabIds);
+  // First, open all startup tabs as pinned
+  const createdTabs = [];
+  for (let i = 0; i < bookmarks.length; i++) {
+    const bm = bookmarks[i];
+    if (!bm.url) continue;
 
-  // Open each bookmark as a pinned tab
-  for (const [index, bm] of bookmarks.entries()) {
-    await browser.tabs.create({
+    const tab = await browser.tabs.create({
       windowId: currentWindow.id,
       url: bm.url,
       pinned: true,
-      active: index === 0
+      active: i === 0 // Focus the first tab
     });
+    createdTabs.push(tab.id);
+  }
+
+  // Now, close any pre-existing tabs
+  const unwantedTabIds = currentWindow.tabs.map(tab => tab.id);
+  console.log("Removing: ", unwantedTabIds)
+  if (unwantedTabIds.length > 0) {
+    await browser.tabs.remove(unwantedTabIds);
   }
 }
 
 browser.runtime.onStartup.addListener(() => {
-  setTimeout(openPinnedStartupTabs, 1000); // Let Firefox settle first
+  openStartupPinnedTabs();
 });
