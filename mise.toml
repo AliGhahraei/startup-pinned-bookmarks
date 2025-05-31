@@ -4,3 +4,7 @@ node = "latest"
 
 [tasks]
 lint = "web-ext lint"
+build = [
+  "rm -f ext.zip",
+  "7z a ext.zip background.js manifest.json"
+]
