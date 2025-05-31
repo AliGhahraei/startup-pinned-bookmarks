@@ -2,14 +2,14 @@
   "manifest_version": 2,
   "name": "Startup Pinned Bookmarks",
   "version": "1.0",
-  "description": "Opens bookmarked sites as pinned tabs on startup.",
+  "description": "Opens bookmarked sites in a `Startup Tabs` folder as pinned tabs on startup and closes any other window.",
   "permissions": ["tabs", "bookmarks", "sessions"],
   "background": {
     "scripts": ["background.js"]
   },
   "applications": {
     "gecko": {
-      "id": "startup-pinned@example.com"
+      "id": "startup-pinned-bookmarks@alighahraei.gitlab.io"
     }
   }
 }
