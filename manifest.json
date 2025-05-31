@@ -7,7 +7,7 @@
     "name": "Ali Ghahraei Figueroa",
     "url": "https://github.com/AliGhahraei/startup-pinned-bookmarks"
   },
-  "permissions": ["tabs", "bookmarks", "sessions"],
+  "permissions": ["tabs", "bookmarks"],
   "background": {
     "scripts": ["background.js"]
   },
