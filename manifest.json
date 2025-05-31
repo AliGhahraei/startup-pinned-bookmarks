@@ -3,6 +3,10 @@
   "name": "Startup Pinned Bookmarks",
   "version": "1.0",
   "description": "Opens bookmarked sites in a `Startup Tabs` folder as pinned tabs on startup and closes any other window.",
+  "developer": {
+    "name": "Ali Ghahraei Figueroa",
+    "url": "https://github.com/AliGhahraei/startup-pinned-bookmarks"
+  },
   "permissions": ["tabs", "bookmarks", "sessions"],
   "background": {
     "scripts": ["background.js"]
