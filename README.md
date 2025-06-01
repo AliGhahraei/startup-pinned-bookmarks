@@ -9,3 +9,8 @@ Run the [mise](https://mise.jdx.dev/) task:
 ```sh
 mise build
 ```
+
+You can also overwrite existing builds if they exist:
+``` sh
+mise build --overwrite-dest
+```
