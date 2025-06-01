@@ -5,4 +5,5 @@ node = "latest"
 [tasks]
 lint = "web-ext lint"
 build = "web-ext build"
+clean = "rm -rf web-ext-artifacts"
 sign = "web-ext sign --channel listed"
